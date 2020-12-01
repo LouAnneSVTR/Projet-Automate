@@ -1,0 +1,48 @@
+/*
+  Exemple d'un langage défini par un automate déterministe
+*/
+
+// Les mots dont le nombre de a et le nombre de b ont la même parité
+L1 = {
+   initial 0;
+   final 0;
+   final 3;
+   0 |- a -> 1;
+   1 |- a -> 0;
+   2 |- a -> 3;
+   3 |- a -> 2;
+   0 |- b -> 2;
+   1 |- b -> 3;
+   2 |- b -> 0;
+   3 |- b -> 1;
+}
+
+/*
+  Exemple d'un langage défini par un automate non déterministe
+*/
+
+/*
+// Le langage a+b+|b+a+
+L2 = {
+   initial 1;
+   final 3;
+   1 |- a -> 1;
+   1 |- a -> 2;
+   2 |- b -> 2;
+   2 |- b -> 3;
+
+   initial 4;
+   final 6;
+   4 |- a -> 4;
+   4 |- a -> 5;
+   5 |- b -> 5;
+   5 |- b -> 6;
+}
+*/
+
+/*
+  Exemples de langages définis par des expressions régulières
+*/
+
+// L3 = a*b*;
+// L4 = c(a|b)+c;
