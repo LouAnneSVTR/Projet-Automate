@@ -53,7 +53,7 @@ input:
 automaton: IDENTIFIER EQUAL L_BRACE automaton_fields R_BRACE   {$$ = $4.determine(); $$.name = identifier; automata |= $$;}
 ;
 
-automaton_fields:
+automaton_fields:                                                             {$$ = automaton();}
 // example: Initial 1; (1 is an initial state)
 | automaton_fields INITIAL_KW  NONTERMINAL SEMICOLON                          {$$ = $1; $$.initials |= non_terminal;}
 // example: Final 2;   (2 is a final state)
