@@ -16,11 +16,26 @@ automaton automaton::determine() const {
   /*
    * TODO: Question 1. retourner un automate déterminisé équivalent
    * 
-   * indice : utiliser un objet de type std::vector<set<int>> pour stocker 
+   * indice : utiliser un objet de type std::vector<set<int>> pour stocker
    * les ensembles d'états créés par l'algorithme de déterminisation. 
    * Les états de l'automate déterministe retourné seront les indices 
    * des ensembles d'états dans le vecteur.
   */
+    std::vector<set<int>> états;
+  if ( automaton.is_deterministic ) {
+      std::cout << "Cet automate est déjà deterministe, il est inutile d'appliquer la fonction ! " << endl;
+  } else {
+      //TODO 1- INSERER dans le 1er SET du vector d'état deterministe, tous les etats INITIAUX de l'automate de base
+      // ainsi que les états reliés par des E-transitions
+
+      //TODO 2- Trouver un moyen de choper les elements pour regrouper les transitions du futur automate
+
+      //TODO 3- RECREER en commencer a partir de l'éatat initial tous les nouveaux etats de l'automate determiniqtes
+      // todo → faire attention a pendre les états qui menent vers les bonnes transiont avec le bon carac ET permi eux, ajouter leur E-transitions
+      //todo → Faire attention a ne pas recreer un état de l'automate deterministe deja existant dans le vector de set ETATS
+
+      //TODO 4- RECREER les transitions de l'automate, PAS 2 TRANSITION PAREILS
+  }
   return *this;
 }
 
