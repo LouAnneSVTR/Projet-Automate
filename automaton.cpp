@@ -48,6 +48,39 @@ automaton automaton::determine() const {
 
                 }
                 //TODO voir etat si il est final
+               // checher si sons sous ensemble est deja dans mes new state et avec k l
+                //indicesi le sous ensmeble est deja ^résent, on ne le rajoute
+
+
+                /* bool notFound = true;
+                int k = 0;
+
+                while (notFound && k < newStates.size()) {
+                    if (newStates[k] == newSet) {
+                        notFound = false;
+                    } else {
+                        k++;
+                    }
+                }
+                if (notFound) {
+                    newStates.push_back(newSet); // on ajoute le nouveau sous-ensemble
+                    newTransitions |= transition(i, a, newStates.size() -
+                                                       1); // on crée la nouvelle transition de l'automate déterministe
+                    bool final;
+                    for (int s : newSet) {
+                        final = this->finals.contains(s);
+                    }
+                    if (final) {
+                        newFinals |= newStates.size() - 1;
+                    }
+                } else {
+                    newTransitions |= transition(i, a,
+                                                 k);// on crée la nouvelle transition de l'automate déterministe
+                }
+
+            }
+        }
+    }*/
             }
         }
 
