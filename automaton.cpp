@@ -22,13 +22,28 @@ automaton automaton::determine() const {
    * des ensembles d'états dans le vecteur.
    */
     std::vector<set<int>> etats;
+    set<char> alphabet;
     if ( automaton.is_deterministic ) {
         std::cout << "Cet automate est déjà deterministe, il est inutile d'appliquer la fonction ! " << endl;
     } else {
-
         etats[0] = epsilon_accessible( this->initials);
         //On insère dans le premier set tous les états initiaux du "this"
         //On ajoute toutes les éventuelles E-transition dans l'état initial du nouvel automate
+        alphabet = this->get_alphabet();
+        set<transition> nouvTrans;
+        set<int>
+        for (int  i = 0 ; i < etats.size() ; ++i) {
+            set<int> etat = etats[i];
+            for (char a : alphabet) {
+                set<int> nouvSet;
+                nouvSet |= accessible(etat, a);
+
+                if(std::find(etats.begin(), etats.end(), nouvSet) == etats.end()) {
+                    etats.push_back(nouvSet);
+                }
+            }
+        }
+
 
         //TODO 2- Trouver un moyen de choper les elements pour regrouper les transitions du futur automate
         // on peut s'aider le méthode size()
