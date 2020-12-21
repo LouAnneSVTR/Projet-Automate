@@ -24,6 +24,8 @@ automaton automaton::determine() const {
     std::vector<set<int>> states_newAutomate;
     set<char> alphabet;
     set<transition> newTrans;
+    set<int> newFinals;
+    set<int> newInitials;
     set<int> newSet;
     set<int> state;
 
@@ -50,8 +52,21 @@ automaton automaton::determine() const {
                         j++;
                     }
 
-                    if (j < states_newAutomate.size()) {
+                    if (j >= states_newAutomate.size()) {
                         states_newAutomate.push_back(newSet);
+                        newTrans |= transition(i, a, states_newAutomate.size() - 1);
+
+                        for (int s : newSet) {
+                            if (this->initials.contains(s)) {
+                                newInitials |= {i};
+                            }
+
+                            if (this->finals.contains(s)) {
+                                newFinals |= {i};
+                            }
+                        }
+                    } else {
+                        newTrans |= transition(i, a, j);
                     }
                 }
             }

@@ -90,8 +90,7 @@ int main() {
                             }
                         }
                     } else {
-                        newTransitions |= transition(i, a,
-                                                     k);// on crée la nouvelle transition de l'automate déterministe
+                        newTransitions |= transition(i, a, k);// on crée la nouvelle transition de l'automate déterministe
                     }
 
                 }
