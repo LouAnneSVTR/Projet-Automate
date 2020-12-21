@@ -70,12 +70,12 @@ automaton_fields:                                                               
 rationnal: IDENTIFIER EQUAL rationnal_rules SEMICOLON {$$ = $3.determine(); $$.name = identifier; automata |= $$;}
 ;
 
-rationnal_rules:                        {$$ = automaton(); $$.initials |= new_state; $$.finals |= new_state;}
+rationnal_rules:                       /* {$$ = automaton(); $$.initials |= new_state; $$.finals |= new_state;}
 | rationnal_rules TERMINAL              {$$ = $1; $$.finals -= new_state; $$.transitions |= transition(new_state, terminal, new_state+1);  $$.finals |= new_state;}
 | rationnal_rules PLUS                  {}
 | rationnal_rules STAR                  {$$ = $1; $$.transitions |= transition(new_state, new_state--); $$.transitions |= transition(new_state, new_state++);}
 | rationnal_rules OR rationnal_rules    {$$ = $1; $$.transitions |= transition(new_state, new_state++); $$.transitions |= transition(new_state, terminal,  new_state++);}
-| L_PAR rationnal_rules R_PAR           {}
+| L_PAR rationnal_rules R_PAR           {}*/
 ;
 
 /*rationnal_rules: {$$ = automaton();}
