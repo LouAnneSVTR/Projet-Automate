@@ -23,7 +23,7 @@ namespace univ_nantes {
    *   - set union: S1 | S2 represents the union of S1 and S2. 
    *                For example, S1 | S2 == {1, 2, 3, 4, 5}, and S1 |= S2 is the same as S1 = {1, 2, 3, 4, 5};
    *   - set intersection: S1 & S2 represents the intersection of S1 and S2. 
-   *                For example, S1 | S2 == {1, 2, 3, 4, 5}, and S1 |= S2 is the same as S1 = {1, 2, 3, 4, 5};
+   *                For example, S1 & S2 == {1, 2, 3, 4, 5}, and S1 |= S2 is the same as S1 = {1, 2, 3, 4, 5};
    */
   template<typename T>
   class set {

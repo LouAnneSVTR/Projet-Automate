@@ -3,7 +3,7 @@
 */
 
 // Les mots dont le nombre de a et le nombre de b ont la même parité
-L1 = {
+L2 = {
    initial 0;
    final 0;
    final 3;
@@ -36,7 +36,7 @@ L2 = {
    4 |- a -> 4;
    4 |- a -> 5;
    5 |- b -> 5;
-   5 |- b -> 6; 
+   5 |- b -> 6;
 }
 */
 

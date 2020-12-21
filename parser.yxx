@@ -37,7 +37,8 @@ int new_state=0;
 %token  SEMICOLON EQUAL
 %token  OR STAR PLUS
 %token  L_PAR R_PAR L_BRACE R_BRACE L_TRANS R_TRANS
-%token  IDENTIFIER TERMINAL NONTERMINAL 
+%token  IDENTIFIER TERMINAL NONTERMINAL
+
 
 // Initial rule of the grammar
 %start input
@@ -75,7 +76,24 @@ rationnal: IDENTIFIER EQUAL rationnal_rules SEMICOLON {$$ = $3.determine(); $$.n
 * indice : inspirez-vous de l'exercice 4.2 dans le TP 4.
 */
 
-rationnal_rules: {YYERROR;}
+rationnal_rules:
+| rationnal_rules L_PAR
+
+
+
+rationnal_sommes: rationnal_sommes PLUS rationnal_produits
+| rationnal_produits
+;
+
+rationnal_produits: rationnal_produits rationnal_facteurs
+| rationnal_facteurs
+;
+
+rationnal_facteurs: L_PAR rationnal_sommes R_PAR
+| rationnal_termes
+;
+
+rationnal_termes: TERMINAL
 ;
 
 %%

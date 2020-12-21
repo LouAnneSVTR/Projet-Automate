@@ -21,9 +21,9 @@ automaton automaton::determine() const {
    * Les états de l'automate déterministe retourné seront les indices 
    * des ensembles d'états dans le vecteur.
   */
-    std::vector<set<int>> états;
+  /*  univ_nantes::vector<set<int>> etats;
   if ( automaton.is_deterministic ) {
-      std::cout << "Cet automate est déjà deterministe, il est inutile d'appliquer la fonction ! " << endl;
+      univ_nantes::cout << "Cet automate est déjà deterministe, il est inutile d'appliquer la fonction ! " << endl;
   } else {
       //TODO 1- INSERER dans le 1er SET du vector d'état deterministe, tous les etats INITIAUX de l'automate de base
       // ainsi que les états reliés par des E-transitions
@@ -36,7 +36,7 @@ automaton automaton::determine() const {
 
       //TODO 4- RECREER les transitions de l'automate, PAS 2 TRANSITION PAREILS
   }
-  return *this;
+  return *this;*/
 }
 
 
@@ -47,17 +47,17 @@ automaton automaton::determine() const {
  * and no two transitions starting in the same state and ending in a different states, with a different label.
  */
 bool automaton::is_deterministic() const {
-  // Check that there is a unique initial state
-  if(initials.size() != 1) return false;
-  for(transition t1 : transitions) {
-    // Check that there is no epsilon transition
-    if(t1.is_epsilon()) return false;
-    for(transition t2 : transitions) {
-      // Check that there are no two transitions starting in the same state, with the same label
-      if(t1.start == t2.start && t1.terminal == t2.terminal && t1.end != t2.end) return false;
+    // Check that there is a unique initial state
+    if(initials.size() != 1) return false;
+    for(transition t1 : transitions) {
+        // Check that there is no epsilon transition
+        if(t1.is_epsilon()) return false;
+        for(transition t2 : transitions) {
+            // Check that there are no two transitions starting in the same state, with the same label
+            if(t1.start == t2.start && t1.terminal == t2.terminal && t1.end != t2.end) return false;
+        }
     }
-  }
-  return true;
+    return true;
 }
 
 /**
