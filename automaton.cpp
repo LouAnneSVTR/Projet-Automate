@@ -13,33 +13,38 @@
 using namespace univ_nantes;
 
 automaton automaton::determine() const {
-    /*
-   * TODO: Question 1. retourner un automate déterminisé équivalent
+  /* TODO: Question 1. retourner un automate déterminisé équivalent
    *
    * indice : utiliser un objet de type std::vector<set<int>> pour stocker
    * les ensembles d'états créés par l'algorithme de déterminisation.
    * Les états de l'automate déterministe retourné seront les indices
-   * des ensembles d'états dans le vecteur.
-   */
-    std::vector<set<int>> etats;
+   * des ensembles d'états dans le vecteur. */
+
+    //Variable
+    std::vector<set<int>> state_newAutomate;
     set<char> alphabet;
+    set<transition> newTrans;
+    set<int> newSet;
+
+    //Début
     if ( automaton.is_deterministic ) {
         std::cout << "Cet automate est déjà deterministe, il est inutile d'appliquer la fonction ! " << endl;
+
     } else {
-        etats[0] = epsilon_accessible( this->initials);
+        state_newAutomate[0] = epsilon_accessible( this->initials);
         //On insère dans le premier set tous les états initiaux du "this"
         //On ajoute toutes les éventuelles E-transition dans l'état initial du nouvel automate
-        alphabet = this->get_alphabet();
-        set<transition> nouvTrans;
-        set<int>
-        for (int  i = 0 ; i < etats.size() ; ++i) {
-            set<int> etat = etats[i];
-            for (char a : alphabet) {
-                set<int> nouvSet;
-                nouvSet |= accessible(etat, a);
 
-                if(std::find(etats.begin(), etats.end(), nouvSet) == etats.end()) {
-                    etats.push_back(nouvSet);
+        alphabet = this->get_alphabet(); //On cherche l'aphabet du "this"
+
+        for (int  i = 0 ; i < state_newAutomate.size() ; ++i) {
+            set<int> state_newAutomate = state_newAutomate[i];
+
+            for (char a : alphabet) {
+                newSet |= accessible(state_newAutomate, a);
+
+                if(std::find(state_newAutomate.begin(), state_newAutomate.end(), newSet) == state_newAutomate.end()) {
+                    state_newAutomate.push_back(newSet);
                 }
             }
         }
