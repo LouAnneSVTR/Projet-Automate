@@ -21,10 +21,11 @@ automaton automaton::determine() const {
    * des ensembles d'états dans le vecteur. */
 
     //Variable
-    std::vector<set<int>> state_newAutomate;
+    std::vector<set<int>> states_newAutomate;
     set<char> alphabet;
     set<transition> newTrans;
     set<int> newSet;
+    set<int> state;
 
     //Début
     if ( automaton.is_deterministic ) {
@@ -32,20 +33,21 @@ automaton automaton::determine() const {
 
     } else {
         state_newAutomate[0] = epsilon_accessible( this->initials);
-        //On insère dans le premier set tous les états initiaux du "this"
-        //On ajoute toutes les éventuelles E-transition dans l'état initial du nouvel automate
+        //On insère dans le premier set tous les états initiaux du "this".
+        //On ajoute toutes les éventuelles E-transition dans l'état initial du nouvel automate.
 
-        alphabet = this->get_alphabet(); //On cherche l'aphabet du "this"
+        alphabet = this->get_alphabet(); //On cherche l'alphabet du "this".
 
         for (int  i = 0 ; i < state_newAutomate.size() ; ++i) {
-            set<int> state_newAutomate = state_newAutomate[i];
+            state = states_newAutomate[i];
 
             for (char a : alphabet) {
-                newSet |= accessible(state_newAutomate, a);
+                newSet |= accessible(state, a);
 
-                if(std::find(state_newAutomate.begin(), state_newAutomate.end(), newSet) == state_newAutomate.end()) {
-                    state_newAutomate.push_back(newSet);
+                if( newSet.size() != 0 ) { //On test si
+
                 }
+                //TODO voir etat si il est final
             }
         }
 
