@@ -74,7 +74,7 @@ rationnal_rules:                        {$$ = automaton(); $$.initials |= new_st
 | rationnal_rules TERMINAL              {$$ = $1; $$.finals -= new_state; $$.transitions |= transition(new_state, terminal, new_state+1);  $$.finals |= new_state;}
 | rationnal_rules PLUS                  {}
 | rationnal_rules STAR                  {$$ = $1; $$.transitions |= transition(new_state, new_state--); $$.transitions |= transition(new_state, new_state++);}
-| rationnal_rules OR rationnal_rules    {$$ = $1; $$.transitions |= transition(new_state, new_state++); $$.transitions |= transition(new_state, terminal,  new_state++)}
+| rationnal_rules OR rationnal_rules    {$$ = $1; $$.transitions |= transition(new_state, new_state++); $$.transitions |= transition(new_state, terminal,  new_state++);}
 | L_PAR rationnal_rules R_PAR           {}
 ;
 
