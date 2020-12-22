@@ -30,78 +30,57 @@ automaton automaton::determine() const {
     set<int> state;
 
     //Début
-    if (automaton.is_deterministic) {
-        std::cout << "Cet automate est déjà deterministe, il est inutile d'appliquer la fonction ! " << endl;
+    if (this->is_deterministic()) {
+        std::cout << "Cet automate est déjà deterministe, il est inutile d'appliquer la fonction ! " << std::endl;
+        return *this;
 
     } else {
-        state_newAutomate.push_back(epsilon_accessible(this->initials));
+        states_newAutomate.push_back(epsilon_accessible(this->initials));
         //On insère dans le premier set tous les états initiaux du "this".
         //On ajoute toutes les éventuelles E-transition dans l'état initial du nouvel automate.
 
         alphabet = this->get_alphabet(); //On cherche l'alphabet du "this".
 
-        for (int i = 0; i < state_newAutomate.size(); ++i) {
-            state = states_newAutomate[i];//Enregistrement de de l'état du nouvel automate étudié.
+        for (int i = 0; i < states_newAutomate.size(); ++i) {
+            state = states_newAutomate[i];
 
             for (char a : alphabet) {
-                newSet |= accessible(state, a); //On récupère tous les états qui recoivent une transition par ce caratère "a".
+                newSet |= accessible(state, a);
 
-                if (newSet.size() > 0) { //Si l'état a une transition, on verifie la création de l'état.
-                    int index = 0
-
-                    //On cherche à savoir si le nouvel état est déjà présent dans l'automate.
-                    while (states_newAutomate[index] != state && index < states_newAutomate.size()) {
-                        index++;
+                if (newSet.size() > 0) { //On test si
+                    int j = 0;
+                    while (states_newAutomate[j] != state && j < states_newAutomate.size()) {
+                        j++;
                     }
 
-                    if (index >= states_newAutomate.size()) {
-                        states_newAutomate.push_back(newSet); //L'état n'existe pas, on le rajoute dans notre vector de set.
-                        newTrans |= transition(i, a, states_newAutomate.size() - 1); //Création de la transiotn vers ce nouvel état.
+                    if (j >= states_newAutomate.size()) {
+                        states_newAutomate.push_back(newSet);
+                        newTrans |= transition(i, a, states_newAutomate.size() - 1);
 
                         for (int s : newSet) {
                             if (this->initials.contains(s)) {
-                                newInitials |= {i}; //Ajout de l'état comme unique intial du  nouvel automate.
+                                newInitials |= {i};
                             }
 
                             if (this->finals.contains(s)) {
-                                newFinals |= {i}; //Ajout de l'état parmi les états finaux du nouvel automate.
+                                newFinals |= {i};
                             }
                         }
-
                     } else {
-                        newTrans |= transition(i, a, j); //Pas besoin de création d'état, on creer simplement la transitions.
+                        newTrans |= transition(i, a, j);
                     }
                 }
             }
         }
     }
+    automaton newAutomate = automaton();
+    newAutomate.initials = newInitials;
+    newAutomate.finals = newFinals;
+    newAutomate.transitions = newTrans;
+    newAutomate.name = this->name;
+    return newAutomate;
+
 }
-
-
-    //TODO 2- Trouver un moyen de choper les elements pour regrouper les transitions du futur automate
-    // on peut s'aider le méthode size()
-
-    //TODO 3- RECREER en commencer a partir de l'éatat initial tous les nouveaux etats de l'automate determiniqtes
-    // todo → faire attention a prendre les états qui menent vers les bonnes transiont avec le bon carac ET permi eux, ajouter leur E-transitions
-    //todo → Faire attention a ne pas recreer un état de l'automate deterministe deja existant dans le vector de set ETATS
-    //→ utiliser le méthode de comparaison set operator==
-
-    //TODO 4- RECREER les transitions de l'automate, PAS 2 TRANSITIONS PAREILS
-
-    /*
-     * while(count < newStates.size()) {
-     * for (char term : this->get_alphabet()){
-      // pour chaque état et pour chaque charactère de l'alphabet,
-      // on créer un set d'état de sortie
-     * for (transition trans : this->transitions) {
-      // on parcours toutes les transitions de l'automate
-     * while (i < state.size()) {
-     * for (set<int> y : newStates) {
-     */
-    //}
-    /* return *this;
- }*/
-
 
 /*
  * Gets whether the automaton is deterministic or not
