@@ -17,12 +17,11 @@ L1 = {
    3 |- b -> 1;
 }
 */
-
 /*
   Exemple d'un langage défini par un automate non déterministe
 */
 
-
+/*
 // Le langage a+b+|b+a+
 L1 = {
    initial 1;
@@ -31,8 +30,7 @@ L1 = {
    1 |- a -> 2;
    2 |- b -> 2;
    2 |- b -> 3;
-}
-   /*
+
    initial 4;
    final 6;
    4 |- a -> 4;
@@ -42,10 +40,9 @@ L1 = {
 }
 */
 
-
 /*
   Exemples de langages définis par des expressions régulières
 */
 
-//L3 = a*b*;
-//L4 = c(a|b)+c;
+//L3 = a*b(c | d);
+L4 = a((d*c+)+a+(bc)+)*;

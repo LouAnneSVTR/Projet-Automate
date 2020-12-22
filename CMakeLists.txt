@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
-project(SAUVETRE_COUEDEL_584J_Projet_Automate)
+project(untitled1)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(SAUVETRE_COUEDEL_584J_Projet_Automate main.cpp)
+add_executable(untitled1 main.cpp)

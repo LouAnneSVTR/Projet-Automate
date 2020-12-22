@@ -485,16 +485,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   21
+#define YYLAST   42
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  20
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  12
+#define YYNRULES  20
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  27
+#define YYNSTATES  38
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   274
@@ -543,8 +543,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    48,    48,    49,    50,    54,    57,    59,    61,    63,
-      65,    70,    73
+       0,    47,    47,    48,    49,    53,    56,    59,    61,    63,
+      65,    70,    79,    80,    81,    82,    83,    84,    85,    88,
+      89
 };
 #endif
 
@@ -571,7 +572,7 @@ static const yytype_int16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF (-14)
+#define YYPACT_NINF (-11)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -585,9 +586,10 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -14,     0,   -14,    -1,   -14,   -14,    -9,   -14,     1,    -3,
-     -14,   -11,   -10,   -14,    -5,     6,     7,   -13,   -14,   -14,
-      -4,    -2,    12,     2,   -14,    13,   -14
+     -11,     0,   -11,     2,   -11,   -11,   -10,   -11,   -11,     4,
+      -3,   -11,    12,   -11,   -11,    12,   -11,    16,    17,   -11,
+      19,    10,    15,    26,    31,    13,    -4,   -11,   -11,    20,
+      22,   -11,   -11,    34,    23,   -11,    35,   -11
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -595,21 +597,22 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       2,     0,     1,     0,     3,     4,    12,     6,     0,     0,
-      11,     0,     0,     5,     0,     0,     0,     0,     7,     8,
-       0,     0,     0,     0,    10,     0,     9
+       2,     0,     1,     0,     3,     4,    12,     6,    13,     0,
+       0,    11,    12,    16,    15,    12,    14,     0,     0,     5,
+       0,    18,     0,     0,     0,     0,    17,     7,     8,     0,
+       0,    20,    19,     0,     0,    10,     0,     9
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -14,   -14,   -14,   -14,   -14,   -14
+     -11,   -11,   -11,   -11,   -11,    -8
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     4,     9,     5,     8
+      -1,     1,     4,    10,     5,     9
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -617,39 +620,46 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       2,    11,    12,    20,     7,    21,     6,    10,    15,    16,
-      17,    13,    18,    19,    23,    22,    14,     3,    24,    26,
-       0,    25
+       2,    17,    18,     7,    21,    31,    32,    22,     8,     6,
+      11,    19,    12,    13,    14,    15,    20,     3,    12,    13,
+      14,    15,    16,    12,    13,    14,    15,    26,    16,    29,
+       8,    30,    27,    16,    25,    23,    24,    28,    34,    33,
+      35,    37,    36
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     4,     5,    16,    13,    18,     7,     6,    19,    19,
-      15,    14,     6,     6,    16,    19,    19,    17,     6,     6,
-      -1,    19
+       0,     4,     5,    13,    12,     9,    10,    15,    18,     7,
+       6,    14,     8,     9,    10,    11,    19,    17,     8,     9,
+      10,    11,    18,     8,     9,    10,    11,    12,    18,    16,
+      18,    18,     6,    18,    15,    19,    19,     6,    16,    19,
+       6,     6,    19
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    21,     0,    17,    22,    24,     7,    13,    25,    23,
-       6,     4,     5,    14,    19,    19,    19,    15,     6,     6,
-      16,    18,    19,    16,     6,    19,     6
+       0,    21,     0,    17,    22,    24,     7,    13,    18,    25,
+      23,     6,     8,     9,    10,    11,    18,     4,     5,    14,
+      19,    25,    25,    19,    19,    15,    12,     6,     6,    16,
+      18,     9,    10,    19,    16,     6,    19,     6
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
        0,    20,    21,    21,    21,    22,    23,    23,    23,    23,
-      23,    24,    25
+      23,    24,    25,    25,    25,    25,    25,    25,    25,    25,
+      25
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     0,     2,     2,     5,     0,     4,     4,     7,
-       6,     4,     0
+       6,     4,     0,     1,     2,     2,     2,     4,     3,     5,
+       5
 };
 
 
@@ -1345,49 +1355,99 @@ yyreduce:
   switch (yyn)
     {
   case 5:
-#line 54 "parser.yxx"
+#line 53 "parser.yxx"
                                                                {yyval = yyvsp[-1].determine(); yyval.name = identifier; automata |= yyval;}
-#line 1351 "parser.cpp"
-    break;
-
-  case 6:
-#line 57 "parser.yxx"
-                                                                                {yyval = automaton();}
-#line 1357 "parser.cpp"
+#line 1361 "parser.cpp"
     break;
 
   case 7:
 #line 59 "parser.yxx"
-                                                                                {yyval = yyvsp[-3]; yyval.initials |= non_terminal;}
-#line 1363 "parser.cpp"
+                                                                              {yyval = yyvsp[-3]; yyval.initials |= non_terminal;}
+#line 1367 "parser.cpp"
     break;
 
   case 8:
 #line 61 "parser.yxx"
-                                                                                {yyval = yyvsp[-3]; yyval.finals |= non_terminal;}
-#line 1369 "parser.cpp"
+                                                                              {yyval = yyvsp[-3]; yyval.finals |= non_terminal;}
+#line 1373 "parser.cpp"
     break;
 
   case 9:
 #line 63 "parser.yxx"
-                                                                                {yyval = yyvsp[-6]; yyval.transitions |= transition(previous_non_terminal, terminal, non_terminal);}
-#line 1375 "parser.cpp"
+                                                                              {yyval = yyvsp[-6]; yyval.transitions |= transition(previous_non_terminal, terminal, non_terminal);}
+#line 1379 "parser.cpp"
     break;
 
   case 10:
 #line 65 "parser.yxx"
-                                                                                {yyval = yyvsp[-5]; yyval.transitions |= transition(previous_non_terminal, non_terminal);}
-#line 1381 "parser.cpp"
+                                                                              {yyval = yyvsp[-5]; yyval.transitions |= transition(previous_non_terminal, non_terminal);}
+#line 1385 "parser.cpp"
     break;
 
   case 11:
 #line 70 "parser.yxx"
-                                                      {yyval = yyvsp[-1].determine(); yyval.name = identifier; automata |= yyval;}
-#line 1387 "parser.cpp"
+                                                      {std::cout << yyvsp[-1] << std::endl;yyval = yyvsp[-1].determine(); yyval.name = identifier; automata |= yyval;}
+#line 1391 "parser.cpp"
+    break;
+
+  case 12:
+#line 79 "parser.yxx"
+                                                {yyval = automaton(); yyval.initials |= new_state; yyval.finals |= new_state;}
+#line 1397 "parser.cpp"
+    break;
+
+  case 13:
+#line 80 "parser.yxx"
+                                                {yyval = automaton(); yyval.initials |= {new_state}; yyval.finals |= {new_state+1}; yyval.transitions |= transition(new_state, terminal, new_state+1); new_state = new_state + 2; std::cout << "TERMINAL" << yyval <<  std::endl;}
+#line 1403 "parser.cpp"
+    break;
+
+  case 14:
+#line 81 "parser.yxx"
+                                                {yyval = yyvsp[-1]; yyval.transitions |= transition(new_state - 1, new_state); yyval.transitions |= transition(new_state, terminal, new_state + 1); yyval.finals -= yyvsp[-1].finals[0]; yyval.finals |= new_state + 1; new_state = new_state + 2; std::cout << "RR TERMINAL" << yyval <<  std::endl;}
+#line 1409 "parser.cpp"
+    break;
+
+  case 15:
+#line 82 "parser.yxx"
+                                                {yyval = yyvsp[-1]; yyval.transitions |= transition(yyvsp[-1].finals[0], new_state - 2);std::cout << "PLUS" << yyval <<  std::endl;}
+#line 1415 "parser.cpp"
+    break;
+
+  case 16:
+#line 83 "parser.yxx"
+                                                {yyval = yyvsp[-1]; yyval.transitions |= transition(new_state - 2, yyvsp[-1].finals[0]); yyval.transitions |= transition(yyvsp[-1].finals[0], new_state - 2);std::cout << "STAR" << yyval <<  std::endl;}
+#line 1421 "parser.cpp"
+    break;
+
+  case 17:
+#line 84 "parser.yxx"
+                                                {yyval = yyvsp[-3]; yyval.finals = yyvsp[-1].finals; yyval.transitions |= yyvsp[-1].transitions; yyval.transitions |= transition(yyvsp[-3].finals[0], yyvsp[-1].initials[0]); new_state = new_state + 1;std::cout << "PAR" << yyval <<  std::endl;}
+#line 1427 "parser.cpp"
+    break;
+
+  case 18:
+#line 85 "parser.yxx"
+                                                {yyval = automaton(); yyval.initials |= new_state + 1; yyval.finals |= new_state + 2; yyval.transitions |= transition(yyval.initials[0], yyvsp[-2].initials[0]);
+                                                yyval.transitions |= transition(yyval.initials[0], yyvsp[0].initials[0]); yyval.transitions |= yyvsp[-2].transitions; yyval.transitions |= yyvsp[0].transitions;
+                                                yyval.transitions |= transition(yyvsp[-2].finals[0], yyval.finals[0]); yyval.transitions |= transition(yyvsp[0].finals[0], yyval.finals[0]); new_state = new_state + 2;std::cout << "OR" << yyval <<  std::endl;}
+#line 1435 "parser.cpp"
+    break;
+
+  case 19:
+#line 88 "parser.yxx"
+                                                     {yyval = yyvsp[-4]; yyval.finals = yyvsp[-2].finals; yyval.transitions |= yyvsp[-2].transitions; yyval.transitions |= transition(yyvsp[-4].finals[0], yyvsp[-2].initials[0]); yyval.transitions |= transition(yyval.finals[0], yyvsp[-2].initials[0]);std::cout << "PAR PLUS" << yyval <<  std::endl;}
+#line 1441 "parser.cpp"
+    break;
+
+  case 20:
+#line 89 "parser.yxx"
+                                                     {yyval = yyvsp[-4]; yyval.finals = yyvsp[-2].finals; yyval.transitions |= yyvsp[-2].transitions; yyval.transitions |= transition(yyvsp[-4].finals[0], yyvsp[-2].initials[0]); yyval.transitions |= transition(yyval.finals[0], yyvsp[-2].initials[0]); yyval.transitions |= transition(yyvsp[-2].initials[0], yyval.finals[0]);std::cout << "PAR STAR" << yyval <<  std::endl;}
+#line 1447 "parser.cpp"
     break;
 
 
-#line 1391 "parser.cpp"
+#line 1451 "parser.cpp"
 
       default: break;
     }
@@ -1619,7 +1679,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 100 "parser.yxx"
+#line 92 "parser.yxx"
 
 
 void yyerror(const char *s) {

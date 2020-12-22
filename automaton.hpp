@@ -144,8 +144,6 @@ namespace univ_nantes {
      */
     set<int>  accessible(set<int> from, char c) const;
 
-    set<char> caracteres() const;
-
     /**
      * \fn automaton determine() const
      * \brief Gets a new deterministic automaton that recognizes the same language

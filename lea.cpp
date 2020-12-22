@@ -74,9 +74,11 @@ int main(int argc, char *argv[]) {
     } else {
       // Read the input file (read_automata_file is implemented in parser.y)
       automata |= read_lea_file(argv[i]);
+
     }
   }
 
+    cout << automata << endl;
   // Make additionnal verifications on the validity of the automata
   if(!check(automata)) {
     exit(1);
@@ -131,6 +133,7 @@ void generate_c_file(ostream & out, set<automaton> automata) {
 	<< "  while((c = fgetc(stdin)) != EOF) {\n\n";
 
   for(automaton a : automata){
+
     out << "    // Automate reconnaissant "<< a.name <<"\n"
 	<< "    if (c == '\\n'"; for(int f:a.finals)out<<" && "<<a.name<<"!="<<f; out << ")\tprintf(\"non \");\n"
 	<< "    if (c == '\\n')\t\t{printf(\"reconnu par " << a.name << "\\n\"); " << a.name << " = " << a.initials[0] << ";}\n";

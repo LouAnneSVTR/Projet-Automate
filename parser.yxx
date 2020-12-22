@@ -37,8 +37,7 @@ int new_state=0;
 %token  SEMICOLON EQUAL
 %token  OR STAR PLUS
 %token  L_PAR R_PAR L_BRACE R_BRACE L_TRANS R_TRANS
-%token  IDENTIFIER TERMINAL NONTERMINAL
-
+%token  IDENTIFIER TERMINAL NONTERMINAL 
 
 // Initial rule of the grammar
 %start input
@@ -54,48 +53,41 @@ input:
 automaton: IDENTIFIER EQUAL L_BRACE automaton_fields R_BRACE   {$$ = $4.determine(); $$.name = identifier; automata |= $$;}
 ;
 
-automaton_fields:                                                               {$$ = automaton();}
+automaton_fields:
+
 // example: Initial 1; (1 is an initial state)
-| automaton_fields INITIAL_KW  NONTERMINAL SEMICOLON                            {$$ = $1; $$.initials |= non_terminal;}
+| automaton_fields INITIAL_KW  NONTERMINAL SEMICOLON                          {$$ = $1; $$.initials |= non_terminal;}
 // example: Final 2;   (2 is a final state)
-| automaton_fields FINAL_KW NONTERMINAL SEMICOLON                               {$$ = $1; $$.finals |= non_terminal;}
+| automaton_fields FINAL_KW NONTERMINAL SEMICOLON                             {$$ = $1; $$.finals |= non_terminal;}
 // example: 1 |-a-> 2; (transition labeled by 'a' from state 1 to state 2)
-| automaton_fields NONTERMINAL L_TRANS TERMINAL R_TRANS NONTERMINAL SEMICOLON   {$$ = $1; $$.transitions |= transition(previous_non_terminal, terminal, non_terminal);}
+| automaton_fields NONTERMINAL L_TRANS TERMINAL R_TRANS NONTERMINAL SEMICOLON {$$ = $1; $$.transitions |= transition(previous_non_terminal, terminal, non_terminal);}
 // example: 2 |--> 1;  (epsilon transition from state 1 to state 2)
-| automaton_fields NONTERMINAL L_TRANS          R_TRANS NONTERMINAL SEMICOLON   {$$ = $1; $$.transitions |= transition(previous_non_terminal, non_terminal);}
+| automaton_fields NONTERMINAL L_TRANS          R_TRANS NONTERMINAL SEMICOLON {$$ = $1; $$.transitions |= transition(previous_non_terminal, non_terminal);}
 ;
 
 
 // example: L3 = a*b*;
-rationnal: IDENTIFIER EQUAL rationnal_rules SEMICOLON {$$ = $3.determine(); $$.name = identifier; automata |= $$;}
+rationnal: IDENTIFIER EQUAL rationnal_rules SEMICOLON {std::cout << $3 << std::endl;$$ = $3.determine(); $$.name = identifier; automata |= $$;}
 ;
 
-rationnal_rules:                       /* {$$ = automaton(); $$.initials |= new_state; $$.finals |= new_state;}
-| rationnal_rules TERMINAL              {$$ = $1; $$.finals -= new_state; $$.transitions |= transition(new_state, terminal, new_state+1);  $$.finals |= new_state;}
-| rationnal_rules PLUS                  {}
-| rationnal_rules STAR                  {$$ = $1; $$.transitions |= transition(new_state, new_state--); $$.transitions |= transition(new_state, new_state++);}
-| rationnal_rules OR rationnal_rules    {$$ = $1; $$.transitions |= transition(new_state, new_state++); $$.transitions |= transition(new_state, terminal,  new_state++);}
-| L_PAR rationnal_rules R_PAR           {}*/
+/*
+* TODO: Question 2. Ajoutez la grammaire permettant de reconnaître des expressions rationnelles
+* 
+* indice : inspirez-vous de l'exercice 4.2 dans le TP 4.
+*/
+
+rationnal_rules:                                        {$$ = automaton(); $$.initials |= new_state; $$.finals |= new_state;}
+|TERMINAL                                               {$$ = automaton(); $$.initials |= {new_state}; $$.finals |= {new_state+1}; $$.transitions |= transition(new_state, terminal, new_state+1); new_state = new_state + 2; std::cout << "TERMINAL" << $$ <<  std::endl;}
+| rationnal_rules TERMINAL                              {$$ = $1; $$.transitions |= transition(new_state - 1, new_state); $$.transitions |= transition(new_state, terminal, new_state + 1); $$.finals -= $1.finals[0]; $$.finals |= new_state + 1; new_state = new_state + 2; std::cout << "RR TERMINAL" << $$ <<  std::endl;}
+| rationnal_rules PLUS                                  {$$ = $1; $$.transitions |= transition($1.finals[0], new_state - 2);std::cout << "PLUS" << $$ <<  std::endl;}
+| rationnal_rules STAR                                  {$$ = $1; $$.transitions |= transition(new_state - 2, $1.finals[0]); $$.transitions |= transition($1.finals[0], new_state - 2);std::cout << "STAR" << $$ <<  std::endl;}
+| rationnal_rules L_PAR rationnal_rules R_PAR           {$$ = $1; $$.finals = $3.finals; $$.transitions |= $3.transitions; $$.transitions |= transition($1.finals[0], $3.initials[0]); new_state = new_state + 1;std::cout << "PAR" << $$ <<  std::endl;}
+| rationnal_rules OR rationnal_rules                    {$$ = automaton(); $$.initials |= new_state + 1; $$.finals |= new_state + 2; $$.transitions |= transition($$.initials[0], $1.initials[0]);
+                                                        $$.transitions |= transition($$.initials[0], $3.initials[0]); $$.transitions |= $1.transitions; $$.transitions |= $3.transitions;
+                                                        $$.transitions |= transition($1.finals[0], $$.finals[0]); $$.transitions |= transition($3.finals[0], $$.finals[0]); new_state = new_state + 2;std::cout << "OR" << $$ <<  std::endl;}
+| rationnal_rules L_PAR rationnal_rules R_PAR PLUS      {$$ = $1; $$.finals = $3.finals; $$.transitions |= $3.transitions; $$.transitions |= transition($1.finals[0], $3.initials[0]); $$.transitions |= transition($$.finals[0], $3.initials[0]);std::cout << "PAR PLUS" << $$ <<  std::endl;}
+| rationnal_rules L_PAR rationnal_rules R_PAR STAR      {$$ = $1; $$.finals = $3.finals; $$.transitions |= $3.transitions; $$.transitions |= transition($1.finals[0], $3.initials[0]); $$.transitions |= transition($$.finals[0], $3.initials[0]); $$.transitions |= transition($3.initials[0], $$.finals[0]);std::cout << "PAR STAR" << $$ <<  std::endl;}
 ;
-
-/*rationnal_rules: {$$ = automaton();}
-| X                                                                             {}
-;
-
-X: X TERMINAL signe                                                             {}
-| TERMINAL signe                                                                {$$ = $1 ;
-                                                                                 $$.transition |= transition(previous_non_terminal, terminal, non_terminal) ;
-                                                                                 $$.transition |= transition(previous_non_terminal, non_terminal) ;
-                                                                                 $$.transition |= transition(non_terminal, terminal, previous_non_terminal)}
-| X OR X                                                                        {}
-| L_PAR X R_Par signe                                                           {}
-;
-
-signe:                                                                          {}
-| STAR                                                                          {}
-| PLUS                                                                          {}
-;*/
-
 
 %%
 
