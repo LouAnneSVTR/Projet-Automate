@@ -41,46 +41,63 @@ automaton automaton::determine() const {
 
         alphabet = this->get_alphabet(); //On cherche l'alphabet du "this".
 
-        for (int i = 0; i < states_newAutomate.size(); ++i) {
-            state = states_newAutomate[i];
+        <<<<<<< HEAD
+        for (int i = 0; i < state_newAutomate.size(); ++i) {
+            state = states_newAutomate[i];//Enregistrement de de l'état du nouvel automate étudié.
+            =======
+            for (int i = 0; i < states_newAutomate.size(); ++i) {
+                state = states_newAutomate[i];
+                >>>>>>> origin/master
 
-            for (char a : alphabet) {
-                newSet |= accessible(state, a);
+                for (char a : alphabet) {
+                    newSet |= accessible(state, a); //On récupère tous les états qui recoivent une transition par ce caratère "a".
 
-                if (newSet.size() > 0) { //On test si
-                    int j = 0;
-                    while (states_newAutomate[j] != state && j < states_newAutomate.size()) {
-                        j++;
-                    }
+                    <<<<<<< HEAD
+                    if (newSet.size() > 0) { //Si l'état a une transition, on verifie la création de l'état.
+                        int index = 0
 
-                    if (j >= states_newAutomate.size()) {
-                        states_newAutomate.push_back(newSet);
-                        newTrans |= transition(i, a, states_newAutomate.size() - 1);
+                        //On cherche à savoir si le nouvel état est déjà présent dans l'automate.
+                        while (states_newAutomate[index] != state && index < states_newAutomate.size()) {
+                            index++;
+                            =======
+                            if (newSet.size() > 0) { //On test si
+                                int j = 0;
+                                while (states_newAutomate[j] != state && j < states_newAutomate.size()) {
+                                    j++;
+                                    >>>>>>> origin/master
+                                }
 
-                        for (int s : newSet) {
-                            if (this->initials.contains(s)) {
-                                newInitials |= {i};
-                            }
+                                if (index >= states_newAutomate.size()) {
+                                    states_newAutomate.push_back(newSet); //L'état n'existe pas, on le rajoute dans notre vector de set.
+                                    newTrans |= transition(i, a, states_newAutomate.size() - 1); //Création de la transiotn vers ce nouvel état.
 
-                            if (this->finals.contains(s)) {
-                                newFinals |= {i};
+                                    for (int s : newSet) {
+                                        if (this->initials.contains(s)) {
+                                            newInitials |= {i}; //Ajout de l'état comme unique intial du  nouvel automate.
+                                        }
+
+                                        if (this->finals.contains(s)) {
+                                            newFinals |= {i}; //Ajout de l'état parmi les états finaux du nouvel automate.
+                                        }
+                                    }
+
+                                } else {
+                                    newTrans |= transition(i, a, j); //Pas besoin de création d'état, on creer simplement la transitions.
+                                }
                             }
                         }
-                    } else {
-                        newTrans |= transition(i, a, j);
                     }
                 }
-            }
-        }
-    }
-    automaton newAutomate = automaton();
-    newAutomate.initials = newInitials;
-    newAutomate.finals = newFinals;
-    newAutomate.transitions = newTrans;
-    newAutomate.name = this->name;
-    return newAutomate;
+                //Création du nouvel automate deterministe.
+                automaton newAutomate = automaton();
 
-}
+                newAutomate.initials = newInitials; //Ajout de l'état intial.
+                newAutomate.finals = newFinals; //Ajout des états finaux.
+                newAutomate.transitions = newTrans;
+                newAutomate.name = this->name;
+
+                return newAutomate;
+            }
 
 /*
  * Gets whether the automaton is deterministic or not
