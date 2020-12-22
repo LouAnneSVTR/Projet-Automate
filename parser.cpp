@@ -1392,57 +1392,57 @@ yyreduce:
 
   case 12:
 #line 79 "parser.yxx"
-                                                {yyval = automaton(); yyval.initials |= new_state; yyval.finals |= new_state;}
+                                                        {yyval = automaton(); yyval.initials |= new_state; yyval.finals |= new_state;}
 #line 1397 "parser.cpp"
     break;
 
   case 13:
 #line 80 "parser.yxx"
-                                                {yyval = automaton(); yyval.initials |= {new_state}; yyval.finals |= {new_state+1}; yyval.transitions |= transition(new_state, terminal, new_state+1); new_state = new_state + 2; std::cout << "TERMINAL" << yyval <<  std::endl;}
+                                                        {yyval = automaton(); yyval.initials |= {new_state}; yyval.finals |= {new_state+1}; yyval.transitions |= transition(new_state, terminal, new_state+1); new_state = new_state + 2; std::cout << "TERMINAL" << yyval <<  std::endl;}
 #line 1403 "parser.cpp"
     break;
 
   case 14:
 #line 81 "parser.yxx"
-                                                {yyval = yyvsp[-1]; yyval.transitions |= transition(new_state - 1, new_state); yyval.transitions |= transition(new_state, terminal, new_state + 1); yyval.finals -= yyvsp[-1].finals[0]; yyval.finals |= new_state + 1; new_state = new_state + 2; std::cout << "RR TERMINAL" << yyval <<  std::endl;}
+                                                        {yyval = yyvsp[-1]; yyval.transitions |= transition(new_state - 1, new_state); yyval.transitions |= transition(new_state, terminal, new_state + 1); yyval.finals -= yyvsp[-1].finals[0]; yyval.finals |= new_state + 1; new_state = new_state + 2; std::cout << "RR TERMINAL" << yyval <<  std::endl;}
 #line 1409 "parser.cpp"
     break;
 
   case 15:
 #line 82 "parser.yxx"
-                                                {yyval = yyvsp[-1]; yyval.transitions |= transition(yyvsp[-1].finals[0], new_state - 2);std::cout << "PLUS" << yyval <<  std::endl;}
+                                                        {yyval = yyvsp[-1]; yyval.transitions |= transition(yyvsp[-1].finals[0], new_state - 2);std::cout << "PLUS" << yyval <<  std::endl;}
 #line 1415 "parser.cpp"
     break;
 
   case 16:
 #line 83 "parser.yxx"
-                                                {yyval = yyvsp[-1]; yyval.transitions |= transition(new_state - 2, yyvsp[-1].finals[0]); yyval.transitions |= transition(yyvsp[-1].finals[0], new_state - 2);std::cout << "STAR" << yyval <<  std::endl;}
+                                                        {yyval = yyvsp[-1]; yyval.transitions |= transition(new_state - 2, yyvsp[-1].finals[0]); yyval.transitions |= transition(yyvsp[-1].finals[0], new_state - 2);std::cout << "STAR" << yyval <<  std::endl;}
 #line 1421 "parser.cpp"
     break;
 
   case 17:
 #line 84 "parser.yxx"
-                                                {yyval = yyvsp[-3]; yyval.finals = yyvsp[-1].finals; yyval.transitions |= yyvsp[-1].transitions; yyval.transitions |= transition(yyvsp[-3].finals[0], yyvsp[-1].initials[0]); new_state = new_state + 1;std::cout << "PAR" << yyval <<  std::endl;}
+                                                        {yyval = yyvsp[-3]; yyval.finals = yyvsp[-1].finals; yyval.transitions |= yyvsp[-1].transitions; yyval.transitions |= transition(yyvsp[-3].finals[0], yyvsp[-1].initials[0]); new_state = new_state + 1;std::cout << "PAR" << yyval <<  std::endl;}
 #line 1427 "parser.cpp"
     break;
 
   case 18:
 #line 85 "parser.yxx"
-                                                {yyval = automaton(); yyval.initials |= new_state + 1; yyval.finals |= new_state + 2; yyval.transitions |= transition(yyval.initials[0], yyvsp[-2].initials[0]);
-                                                yyval.transitions |= transition(yyval.initials[0], yyvsp[0].initials[0]); yyval.transitions |= yyvsp[-2].transitions; yyval.transitions |= yyvsp[0].transitions;
-                                                yyval.transitions |= transition(yyvsp[-2].finals[0], yyval.finals[0]); yyval.transitions |= transition(yyvsp[0].finals[0], yyval.finals[0]); new_state = new_state + 2;std::cout << "OR" << yyval <<  std::endl;}
+                                                        {yyval = automaton(); yyval.initials |= new_state + 1; yyval.finals |= new_state + 2; yyval.transitions |= transition(yyval.initials[0], yyvsp[-2].initials[0]);
+                                                        yyval.transitions |= transition(yyval.initials[0], yyvsp[0].initials[0]); yyval.transitions |= yyvsp[-2].transitions; yyval.transitions |= yyvsp[0].transitions;
+                                                        yyval.transitions |= transition(yyvsp[-2].finals[0], yyval.finals[0]); yyval.transitions |= transition(yyvsp[0].finals[0], yyval.finals[0]); new_state = new_state + 2;std::cout << "OR" << yyval <<  std::endl;}
 #line 1435 "parser.cpp"
     break;
 
   case 19:
 #line 88 "parser.yxx"
-                                                     {yyval = yyvsp[-4]; yyval.finals = yyvsp[-2].finals; yyval.transitions |= yyvsp[-2].transitions; yyval.transitions |= transition(yyvsp[-4].finals[0], yyvsp[-2].initials[0]); yyval.transitions |= transition(yyval.finals[0], yyvsp[-2].initials[0]);std::cout << "PAR PLUS" << yyval <<  std::endl;}
+                                                        {yyval = yyvsp[-4]; yyval.finals = yyvsp[-2].finals; yyval.transitions |= yyvsp[-2].transitions; yyval.transitions |= transition(yyvsp[-4].finals[0], yyvsp[-2].initials[0]); yyval.transitions |= transition(yyval.finals[0], yyvsp[-2].initials[0]);std::cout << "PAR PLUS" << yyval <<  std::endl;}
 #line 1441 "parser.cpp"
     break;
 
   case 20:
 #line 89 "parser.yxx"
-                                                     {yyval = yyvsp[-4]; yyval.finals = yyvsp[-2].finals; yyval.transitions |= yyvsp[-2].transitions; yyval.transitions |= transition(yyvsp[-4].finals[0], yyvsp[-2].initials[0]); yyval.transitions |= transition(yyval.finals[0], yyvsp[-2].initials[0]); yyval.transitions |= transition(yyvsp[-2].initials[0], yyval.finals[0]);std::cout << "PAR STAR" << yyval <<  std::endl;}
+                                                        {yyval = yyvsp[-4]; yyval.finals = yyvsp[-2].finals; yyval.transitions |= yyvsp[-2].transitions; yyval.transitions |= transition(yyvsp[-4].finals[0], yyvsp[-2].initials[0]); yyval.transitions |= transition(yyval.finals[0], yyvsp[-2].initials[0]); yyval.transitions |= transition(yyvsp[-2].initials[0], yyval.finals[0]);std::cout << "PAR STAR" << yyval <<  std::endl;}
 #line 1447 "parser.cpp"
     break;
 

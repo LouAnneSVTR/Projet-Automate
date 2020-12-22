@@ -12,162 +12,103 @@
 
 using namespace univ_nantes;
 
-automaton automaton::determine() const {
-    /* TODO: Question 1. retourner un automate déterminisé équivalent
-       *
-       * indice : utiliser un objet de type std::vector<set<int>> pour stocker
+      /* indice : utiliser un objet de type std::vector<set<int>> pour stocker
        * les ensembles d'états créés par l'algorithme de déterminisation.
        * Les états de l'automate déterministe retourné seront les indices
        * des ensembles d'états dans le vecteur. */
 
-    if (is_deterministic()) {return *this;}
+automaton automaton::determine() const{
 
-    set<int> newInitials;             // Ensemble des états initiaux de l'automate déterministe
-    set<int> newFinals;               // Ensemble des états finaux de l'automate déterministe
-    set<transition> newTransitions;   // Ensemble des transitions de l'automate déterministe
-    set<char> alphabet = this->get_alphabet(); // alphabet de l'automate
-    std::vector<set<int>> newStates; // Ensemble des nouveaux sous-ensembles
-
-    newStates.push_back(epsilon_accessible(this->initials)); // newStates[0] : nouvel état initial = sous-ensemble {anciens états initiaux + e-accessible}
-    newInitials = {0};
-
-    // teste si l'état initial est final
-    bool final = false;
-    int s = 0;
-    while(!final && s < newStates[0].size()){
-        final = this->finals.contains(newStates[0][s]);
-        s++;
-    }
-    if (final) { // s'il est final on l'ajoute à finals de l'automate
-        newFinals |= 0;
-    }
-
-
-
-    for(int i = 0; i < newStates.size(); i++) {
-
-        for (char a : alphabet) {
-
-            set<int> newSet;
-            newSet |= epsilon_accessible(accessible(newStates[i], a)); // nouveau sous-ensemble composé des états accessibles avec la lettre de l'alphabet
-
-            if (newSet.size() > 0) { // s'il existe au moins une transition
-
-                bool notFound = true;
-                int k = 0;
-
-                while (notFound && k < newStates.size()) { // on vérifie si le sous-ensemble fait déjà parti de newStates
-
-                    if (newStates[k] == newSet) {
-
-                        notFound = false;
-
-                    } else {
-
-                        k++;
-                    }
-                }
-                if (notFound) {
-
-                    newStates.push_back(newSet); // on ajoute le nouveau sous-ensemble
-                    newTransitions |= transition(i, a, newStates.size() - 1); // on crée la nouvelle transition de l'automate déterministe
-
-                    final = false;
-                    int j = 0;
-                    while(!final && j < newSet.size()){
-                        final = this->finals.contains(newSet[j]);
-                        j++;
-                    }
-                    if (final) { // s'il est final on l'ajoute à finals de l'automate
-                        newFinals |= newStates.size() - 1;
-                    }
-
-                } else {
-
-                    newTransitions |= transition(i, a, k); // on crée la nouvelle transition de l'automate déterministe
-                }
-            }
-        }
-    }
-
-    automaton newAutomaton = automaton();
-    newAutomaton.initials = newInitials;
-    newAutomaton.finals = newFinals;
-    newAutomaton.transitions = newTransitions;
-    newAutomaton.name = this->name + "det";
-
-    return newAutomaton;
-}
-/*
     //Variable
-    std::vector<set<int>> states_newAutomate;
-    set<char> alphabet;
-    set<transition> newTrans;
-    set<int> newFinals;
-    set<int> newInitials;
-    set<int> newSet;
-    set<int> state;
+    std::vector<set<int>> states_newAutomate; //Etats du nouvel automate deterministe.
+    set<char> alphabet; //Alpabet de l'automate "this" et du deterministe.
+    set<transition> newTrans; //Transition de l'automate deterministe.
+    set<int> newFinals; //Etats finaux de l'automate deterministe.
+    set<int> newInitial; //Etat initial de l'automate deterministe.
+    set<int> state; //Etat initial de l'ancien automate.
 
-    //Début
+
+//Début
     if (this->is_deterministic()) {
         std::cout << "Cet automate est déjà deterministe, il est inutile d'appliquer la fonction ! " << std::endl;
         return *this;
 
     } else {
-        states_newAutomate.push_back(epsilon_accessible(this->initials));
-        //On insère dans le premier set tous les états initiaux du "this".
+
+        //On insère dans le premier set tous les états initiaux du "this", pour former l'unique état initial de l'automate.
         //On ajoute toutes les éventuelles E-transition dans l'état initial du nouvel automate.
+        states_newAutomate.push_back(this->epsilon_accessible(this->initials));
+        newInitial |= 0; //Le premier état devient initial.
 
         alphabet = this->get_alphabet(); //On cherche l'alphabet du "this".
 
+        bool final = false;
+        int s = 0;
+
+        while(!final && s < states_newAutomate[0].size()){ //On vérifie si l'état initial est final.
+            final = this->finals.contains(states_newAutomate[0][s]);
+            s++;
+        }
+
+        if (final) { //S'il est final on l'ajoute à finals de l'automate
+            newFinals |= 0;
+        }
+
+        //On parcours chaque nouvel état et chacune de leur transitions.
         for (int i = 0; i < states_newAutomate.size(); ++i) {
-            state = states_newAutomate[i];
 
             for (char a : alphabet) {
-                newSet |= accessible(state,a); //On récupère tous les états qui recoivent une transition par ce caratère "a".
+                set<int> newSet;
+
+                //On récupère tous les états qui recoivent une transition par ce caractère "a".
+                newSet |= epsilon_accessible(accessible(states_newAutomate[i],a));
+
                 if (newSet.size() > 0) { //Si l'état a une transition, on verifie la création de l'état.
+
                     int index = 0;
+                    bool search = true;
 
                     //On cherche à savoir si le nouvel état est déjà présent dans l'automate.
-                    while (states_newAutomate[index] != state && index < states_newAutomate.size()) {
-                        index++;
+                    while (search && index < states_newAutomate.size()) {
 
-                    }
-                    if (newSet.size() > 0) { //On test si
-                        int j = 0;
-                        while (states_newAutomate[j] != state && j < states_newAutomate.size()) {
-                            j++;
-                        }
-
-                        if (index >= states_newAutomate.size()) {
-                            states_newAutomate.push_back(newSet); //L'état n'existe pas, on le rajoute dans notre vector de set.
-                            newTrans |= transition(i, a, states_newAutomate.size() - 1); //Création de la transiotn vers ce nouvel état.
-
-                            for (int s : newSet) {
-
-                                if (this->finals.contains(s)) {
-                                    newFinals |= {i}; //Ajout de l'état parmi les états finaux du nouvel automate.
-                                }
-                            }
+                        if (states_newAutomate[index] == newSet) {
+                            search = false;
                         } else {
-                            newTrans |= transition(i, a,
-                                                   j); //Pas besoin de création d'état, on creer simplement la transitions.
+                            index++;
                         }
+                    }
+
+                    if (search) {
+                        states_newAutomate.push_back(newSet); //L'état n'existe pas, on le rajoute dans notre vector de set.
+                        newTrans |= transition(i, a, states_newAutomate.size() - 1); //Création de la transiotn vers ce nouvel état.
+
+                        final = false;
+                        int index2 = 0;
+
+                        //Cette fois, on vérifie si le nouvel état est final.
+                        while(!final && index2 < newSet.size()){
+                            final = this->finals.contains(newSet[index2]);
+                            index2++;
+                        }
+                        //Ajout de l'état parmi les finaux.
+                        if (final) {
+                            newFinals |= states_newAutomate.size() - 1;
+                        }
+                    } else {
+                        newTrans |= transition(i, a, index); //Pas besoin de création d'état, on creer simplement la transitions.
                     }
                 }
             }
         }
-        //Création du nouvel automate deterministe.
-        automaton newAutomate = automaton();
-
-        newAutomate.initials = newInitials; //Ajout de l'état intial.
+    }
+        automaton newAutomate = automaton(); //Création du nouvel automate deterministe.
+        newAutomate.initials = newInitial; //Ajout de l'état intial.
         newAutomate.finals = newFinals; //Ajout des états finaux.
-        newAutomate.transitions = newTrans;
-        newAutomate.name = this->name;
+        newAutomate.transitions = newTrans; //Ajout des transitions.
+        newAutomate.name = this->name + " Version deterministe"; //Attribution du noms de l'automate.
 
         return newAutomate;
     }
-}*/
 
 
 /*
